@@ -2,18 +2,24 @@ body {
  
   font-family: sans-serif;
 }
-.timer {
-  position: absolute;
-  top: 30px;
-  right: 50px;
-}
-.wrapper {
-  text-align: center;
+.block {
   padding: 30px;
 }
-.hide {
-    display: none;
-  }
+.block div {
+  display: inline;
+}
+.timer {
+  float: right;
+
+}
+.wrapper {
+  width: 50%;
+  margin: auto;
+  padding: 30px;
+}
+.start {
+  text-align: center;
+}
   h1 {
     font-size: 35px;
 
@@ -36,6 +42,7 @@ body {
     text-align: center;
     cursor: pointer;
   }
+  
   button:hover {
     background-color: rgb(125, 15, 139);
   }
