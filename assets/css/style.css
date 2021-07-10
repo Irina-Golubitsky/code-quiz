@@ -2,6 +2,11 @@ body {
  
   font-family: sans-serif;
 }
+.timer {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+}
 .wrapper {
   text-align: center;
   padding: 30px;

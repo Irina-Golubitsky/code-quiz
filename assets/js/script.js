@@ -1,4 +1,12 @@
-var questionArray = [
+let startQuizBtn = document.querySelector("#start-quiz");
+let startDiv=document.querySelector("#start-div");
+let questionsDiv=document.querySelector("#questions-div");
+let resultDiv=document.querySelector("#result-div");
+let showTimer=document.querySelector('#timer-span');
+questionsDiv.style.display="none";
+resultDiv.style.display="none";
+let time=5;
+let questionArray = [
     {question: 'Why is it important to be careful of the source when embedding an <iframe>?',
     choises: ['Copyright infringement','Security risks from “bad” websites', 'All of the above'],
     answer:3
@@ -45,6 +53,33 @@ var questionArray = [
     answer:4
     }
 ]
+function Timer() {
+    // update time
+    time--;
+    timerEl.textContent = time;
+  
+    // check if user ran out of time
+    if (time <= 0) {
+      quizEnd();
+    }
+  }
+function StartQuiz(){
+  startDiv.style.display = "none";
+questionsDiv.style.display='block';
+showTimer.textContent = time;
+let timerInterval = setInterval(function(){
+    time--;
+    showTimer.textContent = time;
+    if (time===0){
+        clearInterval(timerInterval);}
+}, 1000);
+  
+
+
+}
+
+startQuizBtn.addEventListener("click", StartQuiz);
+
 
 
 
