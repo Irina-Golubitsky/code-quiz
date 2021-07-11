@@ -1,12 +1,12 @@
 let startQuizBtn = document.querySelector("#start-quiz");
 let startDiv = document.querySelector("#start-div");
-
+let submitScoreBtn = document.querySelector("#submitScore");
 let questionsDiv = document.querySelector("#questions-div");
 let wrongDiv = document.querySelector("#wrong");
 let correctDiv = document.querySelector("#correct");
-let optionDiv = document.querySelector("#options");
 let resultDiv = document.querySelector("#result-div");
 let showTimer = document.querySelector('#timer-span');
+let showScore= document.querySelector('#score');
 let questionNumber = 0;
 resultDiv.style.display = "none";
 wrongDiv.style.display = "none";
@@ -163,7 +163,10 @@ function OptionClicked(){
     clearInterval(timerInterval);
     showTimer.textContent =0;
     questionsDiv.innerHTML = "";
+    console.log(showScore)
     resultDiv.style.display = 'block';
+    showScore.textContent=score;
+
     
   }
 
@@ -173,7 +176,7 @@ function OptionClicked(){
 
 
 
-
+submitScoreBtn.addEventListener("click", SubmitScore);
 startQuizBtn.addEventListener("click", StartQuiz);
 
 
