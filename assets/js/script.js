@@ -1,15 +1,21 @@
 let startQuizBtn = document.querySelector("#start-quiz");
 let startDiv = document.querySelector("#start-div");
-let questionsDiv = document.querySelector("#questions-div");
 
+let questionsDiv = document.querySelector("#questions-div");
+let wrongDiv = document.querySelector("#wrong");
+let correctDiv = document.querySelector("#correct");
 let optionDiv = document.querySelector("#options");
 let resultDiv = document.querySelector("#result-div");
 let showTimer = document.querySelector('#timer-span');
 let questionNumber = 0;
 resultDiv.style.display = "none";
+wrongDiv.style.display = "none";
+correctDiv.style.display = "none";
 let checkAnswer=0;
-let time = 5;
+let time = 25;
+let score=0;
 let getQuestion={};
+let timerInterval;
 let questionArray = [
   {
     question: 'Why is it important to be careful of the source when embedding an <iframe>?',
@@ -70,17 +76,20 @@ let questionArray = [
 ]
 function StartQuiz() {
   startDiv.style.display = "none";
-  questionsDiv.style.display = 'block';
   showTimer.textContent = time;
   let timerInterval = setInterval(function () {
-    time--;
-    showTimer.textContent = time;
-    if (time === 0) {
-      clearInterval(timerInterval);
+    
+    if (time <= 0) {
+      ShowScore();
+    } else {
+      time--;
+      showTimer.textContent = time;
     }
+    
   }, 1000);
   AskQuestion();
-}
+  }
+
 function AskQuestion() {
 
   let getQuestion = questionArray[questionNumber];
@@ -98,28 +107,71 @@ function AskQuestion() {
     optionDiv.appendChild(optionButton);
     questionsDiv.appendChild(optionDiv);
   }
-  console.log(questionsDiv);
+
 }
 function OptionClicked(){
   let getQuestion = questionArray[questionNumber];
-  let checkDiv=document.createElement("div");
-  checkDiv.setAttribute("class","check-answ");
-  let checkP=document.createElement("p");
+  // let checkDiv=document.createElement("div");
+  // checkDiv.setAttribute("class","check-answ");
+  // let checkP=document.createElement("p");
   console.log(this.getAttribute("data-answ-id"));
   console.log(getQuestion.answer);
   let checkAnswer= getQuestion.answer - this.getAttribute("data-answ-id");
   if (checkAnswer===0){
-    checkP.textContent="Correct!";
+    
+    score++;
+    correctDiv.style.display = "block";
+    setTimeout(function(){
+      correctDiv.style.display = "none";
+      // checkDiv.appendChild(checkP);
+      // questionsDiv.appendChild(checkDiv);
+    }, 500); 
   } else{
-    checkP.textContent="Wrong!";
+    // checkP.textContent="Wrong!";
+    // checkDiv.appendChild(checkP);
+    // questionsDiv.appendChild(checkDiv);
+    time -= 10;
+
+    if (time <= 0) {
+      console.log("yes");
+      time= 0;
+      showTimer.textContent = time;
+
+    }
+    wrongDiv.style.display = "block";
+    setTimeout(function(){wrongDiv.style.display = "none";}, 500); 
   }
-  checkDiv.appendChild(checkP);
-  questionsDiv.appendChild(checkDiv);
+  
+    
+
+
+      questionNumber++;
+      console.log(questionNumber);
+      console.log(questionArray.length);
+      if ((questionNumber<questionArray.length)&&(time>0)){
+        questionsDiv.innerHTML = "";
+        AskQuestion();
+      }
+      // else{
+      //   ShowScore();
+      // }
+
+}
+  function ShowScore(){
+    wrongDiv.style.display = "none";
+    correctDiv.style.display = "none"
+    clearInterval(timerInterval);
+    showTimer.textContent =0;
+    questionsDiv.innerHTML = "";
+    resultDiv.style.display = 'block';
+    
+  }
+
   
 
 
 
-  }
+
 
 
 startQuizBtn.addEventListener("click", StartQuiz);
