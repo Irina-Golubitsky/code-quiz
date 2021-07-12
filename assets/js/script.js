@@ -13,6 +13,8 @@ let showTimer = document.querySelector('#timer-span');
 let showScore= document.querySelector('#score');
 let initialsInput=document.querySelector('#initials');
 let goBackBtn = document.querySelector('#goBack');
+let clearScoresBtn =document.querySelector('#clearScores');
+let viewHighScores=document.querySelector('#view-scores');
 let questionNumber = 0;
 resultDiv.style.display = "none";
 scoresDiv.style.display="none";
@@ -20,7 +22,7 @@ wrongDiv.style.display = "none";
 correctDiv.style.display = "none";
 // let showScoreWas=0;
 let checkAnswer=0;
-let time = 25;
+let time = 0;
 let score=0;
 let getQuestion={};
 let timerInterval;
@@ -83,7 +85,9 @@ let questionArray = [
   }
 ]
 function StartQuiz() {
+  time=25;
   scoresDiv.style.display="none";
+  questionsDiv.style.display="block";
   startDiv.style.display = "none";
   showTimer.textContent = time;
   timerInterval = setInterval(function () {
@@ -225,10 +229,38 @@ function OptionClicked(){
   StartQuiz;
 
 }
+function ClearScores(){
+  localStorage.removeItem("scores");
+  scoreItem.innerHTML="";
+}
+function ViewHighScores(){
+  clearInterval(timerInterval);
+  showTimer.textContent = 0;
+  time=0;
+  scoresDiv.style.display='block';
+  questionsDiv.style.display = 'none';
+  questionsDiv.innerHTML='';
+  blockDiv.style.display = "none";
+  scoreItem.innerHTML = "";
+  startDiv.style.display = "none";
+  blockDiv.style.display = "none";
+  resultDiv.style.display='none';
+  initialsInput.value="";
+  let scoresString= window.localStorage.getItem("scores") || '';
+  if (scoresString!==""){
+    scoresList=scoresString.split(',');
+    for (let i = 0; i < scoresList.length; i+=2) {
+      let newDiv = document.createElement("div");
+      newDiv.textContent= (i/2+1) +". " + scoresList[i]+" - "+scoresList[i+1];
+      scoreItem.appendChild(newDiv);
+    }
 
+  }
 
+}
 
-
+viewHighScores.addEventListener("click", ViewHighScores);
+clearScoresBtn.addEventListener("click", ClearScores);
 goBackBtn.addEventListener("click", StartAgain);
  submitScoreBtn.addEventListener("click", SubmitScore);
 startQuizBtn.addEventListener("click", StartQuiz);
