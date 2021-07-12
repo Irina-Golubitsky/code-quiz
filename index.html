@@ -9,46 +9,45 @@
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<body></body>
-<div class="block">
-  <div class="scores"><a href="">View Highscores</a></div>
-  <div class="timer">Time: <span id="timer-span">0</span></div>
-</div>
-
-<div class="wrapper">
-  <div id="start-div" class="start">
-    <header>
-      <h1>Coding Quiz Challenge</h1>
-    </header>
-    <p>
-      Try to answer the following questions within the time limit. <br>
-      Keep in mind that incorrect answers will penalize your score/time by ten seconds!
-    </p>
-    <button id="start-quiz">Start Quiz</button>
+<body>
+  <div class="block" id="block">
+    <div class="scores"><a href="">View Highscores</a></div>
+    <div class="timer">Time: <span id="timer-span">0</span></div>
   </div>
 
-  <div id="questions-div"></div>
-  <div id="wrong" class="check-answ">Wrong!</div>
-  <div id="correct" class="check-answ">Correct!</div>
+  <div class="wrapper">
+    <div id="start-div" class="start">
+      <header>
+        <h1>Coding Quiz Challenge</h1>
+      </header>
+      <p>
+        Try to answer the following questions within the time limit. <br>
+        Keep in mind that incorrect answers will penalize your score/time by ten seconds!
+      </p>
+      <button id="start-quiz">Start Quiz</button>
+    </div>
 
-  <div id="result-div">
-    <h2>All done!</h2>
-    <p>Your final score is <span id="score"></span>.</p>
-    <p>
-      Enter initials: <input type="text" id="initials" maxlength="3" style="text-transform:uppercase" />
-      <button id="submitScore">Submit</button>
-    </p>
-  </div>
-  <div id="high-scores">
-    <h2>High scores</h2>
-    <div id="score-item" class="score-item"></div>
-    <div><button id="goBack">Go back</button>
-      <button id="clearScores">Clear high scores</button>
+    <div id="questions-div"></div>
+    <div id="wrong" class="check-answ">Wrong!</div>
+    <div id="correct" class="check-answ">Correct!</div>
+
+    <div id="result-div">
+      <h2>All done!</h2>
+      <p>Your final score is <span id="score"></span>.</p>
+      <p>
+        Enter initials: <input type="text" id="initials" maxlength="3" style="text-transform:uppercase" />
+        <button id="submitScore">Submit</button>
+      </p>
+    </div>
+    <div id="high-scores">
+      <h1>High scores</h1>
+      <div id="score-item" class="score-item"></div>
+      <div><button id="goBack">Go back</button>
+        <button id="clearScores">Clear high scores</button>
+      </div>
     </div>
   </div>
-</div>
 
-<body>
   <script src="./assets/js/script.js"></script>
 </body>
 

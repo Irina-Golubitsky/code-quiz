@@ -1,4 +1,6 @@
+
 let startQuizBtn = document.querySelector("#start-quiz");
+let blockDiv = document.querySelector("#block");
 let startDiv = document.querySelector("#start-div");
 let scoresDiv = document.querySelector("#high-scores");
 let scoreItem=document.querySelector("#score-item");
@@ -10,11 +12,13 @@ let resultDiv = document.querySelector("#result-div");
 let showTimer = document.querySelector('#timer-span');
 let showScore= document.querySelector('#score');
 let initialsInput=document.querySelector('#initials');
+let goBackBtn = document.querySelector('#goBack');
 let questionNumber = 0;
 resultDiv.style.display = "none";
 scoresDiv.style.display="none";
 wrongDiv.style.display = "none";
 correctDiv.style.display = "none";
+// let showScoreWas=0;
 let checkAnswer=0;
 let time = 25;
 let score=0;
@@ -85,6 +89,7 @@ function StartQuiz() {
   timerInterval = setInterval(function () {
     
     if (time <= 0) {
+      // showScoreWas++;
       ShowScore();
     } else {
       time--;
@@ -150,14 +155,14 @@ function OptionClicked(){
 
 
       questionNumber++;
-    
+      questionsDiv.innerHTML = "";
       if ((questionNumber<questionArray.length)&&(time>0)){
-        questionsDiv.innerHTML = "";
+        
         AskQuestion();
+      } else {
+        ShowScore();
       }
-      // else{
-      //   ShowScore();
-      // }
+
 
 }
   function ShowScore(){
@@ -165,6 +170,7 @@ function OptionClicked(){
     correctDiv.style.display = "none";
     console.log(timerInterval);
     clearInterval(timerInterval);
+    console.log(timerInterval);
     showTimer.textContent =0;
     questionsDiv.innerHTML = "";
     resultDiv.style.display = 'block';
@@ -175,6 +181,8 @@ function OptionClicked(){
   let scoreAdded=0;
   let scoresList=[];
   if (initials !== "") {
+    initialsInput.value="";
+    blockDiv.style.display = "none";
     resultDiv.style.display="none";
     scoresDiv.style.display='block';
    let scoresString= window.localStorage.getItem("scores") || '';
@@ -185,8 +193,9 @@ function OptionClicked(){
         if (scoresList[i]===initials){
           if (parseInt(scoresList[i+1])<=score){
             scoresList[i+1]=score;
-            scoreAdded=1;
+           
           }
+           scoreAdded=1;
         }
 
       }
@@ -203,16 +212,23 @@ function OptionClicked(){
   }else{
     alert("Erorr! Input initials.");}
  }
-  
+ function StartAgain() {
+  getQuestion = 0;
+  scoresDiv.style.display = 'none';
+  blockDiv.style.display = "none";
+  scoreItem.innerHTML = "";
+  startDiv.style.display = "block";
+  blockDiv.style.display = "block";
+  questionNumber=0;
+  score=0;
+  time = 25;
+  StartQuiz;
+
+}
 
 
 
 
-
+goBackBtn.addEventListener("click", StartAgain);
  submitScoreBtn.addEventListener("click", SubmitScore);
 startQuizBtn.addEventListener("click", StartQuiz);
-
-
-
-
-
