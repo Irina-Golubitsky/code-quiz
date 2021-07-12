@@ -86,7 +86,7 @@ let questionArray = [
 ]
 // quis starts
 function StartQuiz() {
-   time=25;
+   time=75;
    score=0;
   scoresDiv.style.display="none";
   questionsDiv.style.display="block";
