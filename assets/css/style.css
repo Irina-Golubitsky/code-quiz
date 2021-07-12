@@ -3,6 +3,7 @@ body {
   font-family: sans-serif;
   padding: 10px;
 }
+/* styles for high scores and timer */
 .block {
   padding: 30px;
 }
@@ -19,6 +20,7 @@ color: rgb(125, 15, 139);
 .scores:hover{
   text-decoration: underline;
 }
+/* style for quiz content */
 .wrapper {
   width: 50%;
   margin: auto;
@@ -62,6 +64,7 @@ color: rgb(125, 15, 139);
     font-size: 25px;
     font-style:italic;
   }
+  /* style for view high scores */
   .score-item {
     width: 100%;
 background-color: rgb(206, 192, 231);

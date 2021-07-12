@@ -1,4 +1,4 @@
-
+// DOM elements
 let startQuizBtn = document.querySelector("#start-quiz");
 let blockDiv = document.querySelector("#block");
 let startDiv = document.querySelector("#start-div");
@@ -20,9 +20,9 @@ resultDiv.style.display = "none";
 scoresDiv.style.display="none";
 wrongDiv.style.display = "none";
 correctDiv.style.display = "none";
-// let showScoreWas=0;
+// variables
 let checkAnswer=0;
-let time = 0;
+let time=0;
 let score=0;
 let getQuestion={};
 let timerInterval;
@@ -84,33 +84,33 @@ let questionArray = [
     answer: 4
   }
 ]
+// quis starts
 function StartQuiz() {
-  time=25;
+   time=25;
+   score=0;
   scoresDiv.style.display="none";
   questionsDiv.style.display="block";
   startDiv.style.display = "none";
   showTimer.textContent = time;
+// start timer
   timerInterval = setInterval(function () {
-    
     if (time <= 0) {
-      // showScoreWas++;
       ShowScore();
     } else {
       time--;
       showTimer.textContent = time;
-    }
-    
+    } 
   }, 1000);
   AskQuestion();
   }
 
 function AskQuestion() {
-
+// get current question from array of questions and update page
   let getQuestion = questionArray[questionNumber];
   let questionH2 = document.createElement("h2");
   questionH2.textContent = getQuestion.question;
   questionsDiv.appendChild(questionH2);
-  
+// create options buttons and add event listener on each button
   for (i = 0; i < getQuestion.options.length; i++) {
     let optionDiv = document.createElement("div");
     let optionButton = document.createElement("button");
@@ -123,41 +123,31 @@ function AskQuestion() {
   }
 
 }
+// Get and check the answer
 function OptionClicked(){
   let getQuestion = questionArray[questionNumber];
-  // let checkDiv=document.createElement("div");
-  // checkDiv.setAttribute("class","check-answ");
-  // let checkP=document.createElement("p");
-
   let checkAnswer= getQuestion.answer - this.getAttribute("data-answ-id");
-  if (checkAnswer===0){
-    
+  if (checkAnswer===0){ 
     score++;
+    // show feedback if correct
     correctDiv.style.display = "block";
     setTimeout(function(){
       correctDiv.style.display = "none";
-      // checkDiv.appendChild(checkP);
-      // questionsDiv.appendChild(checkDiv);
     }, 1000); 
   } else{
-    // checkP.textContent="Wrong!";
-    // checkDiv.appendChild(checkP);
-    // questionsDiv.appendChild(checkDiv);
+    // punishment
     time -= 10;
-
     if (time <= 0) {
      
       time= 0;
       showTimer.textContent = time;
 
     }
+    // show feedback if wrong
     wrongDiv.style.display = "block";
     setTimeout(function(){wrongDiv.style.display = "none";}, 1000); 
   }
-  
-    
-
-
+// ask next question if we have more or else show result
       questionNumber++;
       questionsDiv.innerHTML = "";
       if ((questionNumber<questionArray.length)&&(time>0)){
@@ -170,16 +160,17 @@ function OptionClicked(){
 
 }
   function ShowScore(){
+    //hide elements
     wrongDiv.style.display = "none";
     correctDiv.style.display = "none";
-    console.log(timerInterval);
+    // stop the timer
     clearInterval(timerInterval);
-    console.log(timerInterval);
     showTimer.textContent =0;
     questionsDiv.innerHTML = "";
     resultDiv.style.display = 'block';
     showScore.textContent=score;  
   }
+  // show high scores and update localStorege
  function SubmitScore(){
   let initials = initialsInput.value.trim().toUpperCase();
   let scoreAdded=0;
@@ -193,21 +184,24 @@ function OptionClicked(){
    if (scoresString!==""){
     scoresList=scoresString.split(',');
    }
+   // check if we already have this user
       for (let i = 0; i < scoresList.length; i=i+2) {
         if (scoresList[i]===initials){
+          //update user score if new score is higher
           if (parseInt(scoresList[i+1])<=score){
-            scoresList[i+1]=score;
-           
+            scoresList[i+1]=score;      
           }
            scoreAdded=1;
         }
-
       }
+      // add new user score
       if (scoreAdded===0){
         scoresList.push(initials);
         scoresList.push(score);
       }
+      // update localStorege
       window.localStorage.setItem("scores", scoresList.toString());
+      // show high scores
       for (let i = 0; i < scoresList.length; i+=2) {
         let newDiv = document.createElement("div");
         newDiv.textContent= (i/2+1) +". " + scoresList[i]+" - "+scoresList[i+1];
@@ -217,15 +211,14 @@ function OptionClicked(){
     alert("Erorr! Input initials.");}
  }
  function StartAgain() {
-  getQuestion = 0;
+  // getQuestion = 0;
+  // hide/show elements
   scoresDiv.style.display = 'none';
   blockDiv.style.display = "none";
   scoreItem.innerHTML = "";
   startDiv.style.display = "block";
   blockDiv.style.display = "block";
   questionNumber=0;
-  score=0;
-  time = 25;
   StartQuiz;
 
 }
@@ -233,6 +226,7 @@ function ClearScores(){
   localStorage.removeItem("scores");
   scoreItem.innerHTML="";
 }
+// if the user clicks View High Scores (at any time)
 function ViewHighScores(){
   clearInterval(timerInterval);
   showTimer.textContent = 0;
@@ -258,7 +252,7 @@ function ViewHighScores(){
   }
 
 }
-
+// event listeners
 viewHighScores.addEventListener("click", ViewHighScores);
 clearScoresBtn.addEventListener("click", ClearScores);
 goBackBtn.addEventListener("click", StartAgain);

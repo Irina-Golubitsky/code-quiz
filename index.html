@@ -10,12 +10,13 @@
 </head>
 
 <body>
+  <!-- high scores and timer block-->
   <div class="block" id="block">
-    <div class="scores" id="view-scores">View Highscores</div>
+    <div class="scores" id="view-scores">View high scores</div>
     <div class="timer">Time: <span id="timer-span">0</span></div>
   </div>
-
   <div class="wrapper">
+    <!-- start quiz block-->
     <div id="start-div" class="start">
       <header>
         <h1>Coding Quiz Challenge</h1>
@@ -26,11 +27,12 @@
       </p>
       <button id="start-quiz">Start Quiz</button>
     </div>
-
+    <!-- question div -->
     <div id="questions-div"></div>
+     <!-- feedback divs -->
     <div id="wrong" class="check-answ">Wrong!</div>
     <div id="correct" class="check-answ">Correct!</div>
-
+    <!-- show result block -->
     <div id="result-div">
       <h2>All done!</h2>
       <p>Your final score is <span id="score"></span>.</p>
@@ -39,6 +41,7 @@
         <button id="submitScore">Submit</button>
       </p>
     </div>
+    <!-- high scores block-->
     <div id="high-scores">
       <h1>High scores</h1>
       <div id="score-item" class="score-item"></div>
