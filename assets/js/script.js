@@ -1,5 +1,7 @@
 let startQuizBtn = document.querySelector("#start-quiz");
 let startDiv = document.querySelector("#start-div");
+let scoresDiv = document.querySelector("#high-scores");
+let scoreItem=document.querySelector("#score-item");
 let submitScoreBtn = document.querySelector("#submitScore");
 let questionsDiv = document.querySelector("#questions-div");
 let wrongDiv = document.querySelector("#wrong");
@@ -7,8 +9,10 @@ let correctDiv = document.querySelector("#correct");
 let resultDiv = document.querySelector("#result-div");
 let showTimer = document.querySelector('#timer-span');
 let showScore= document.querySelector('#score');
+let initialsInput=document.querySelector('#initials');
 let questionNumber = 0;
 resultDiv.style.display = "none";
+scoresDiv.style.display="none";
 wrongDiv.style.display = "none";
 correctDiv.style.display = "none";
 let checkAnswer=0;
@@ -75,9 +79,10 @@ let questionArray = [
   }
 ]
 function StartQuiz() {
+  scoresDiv.style.display="none";
   startDiv.style.display = "none";
   showTimer.textContent = time;
-  let timerInterval = setInterval(function () {
+  timerInterval = setInterval(function () {
     
     if (time <= 0) {
       ShowScore();
@@ -96,7 +101,7 @@ function AskQuestion() {
   let questionH2 = document.createElement("h2");
   questionH2.textContent = getQuestion.question;
   questionsDiv.appendChild(questionH2);
-  console.log(getQuestion.options.length);
+  
   for (i = 0; i < getQuestion.options.length; i++) {
     let optionDiv = document.createElement("div");
     let optionButton = document.createElement("button");
@@ -114,8 +119,7 @@ function OptionClicked(){
   // let checkDiv=document.createElement("div");
   // checkDiv.setAttribute("class","check-answ");
   // let checkP=document.createElement("p");
-  console.log(this.getAttribute("data-answ-id"));
-  console.log(getQuestion.answer);
+
   let checkAnswer= getQuestion.answer - this.getAttribute("data-answ-id");
   if (checkAnswer===0){
     
@@ -125,7 +129,7 @@ function OptionClicked(){
       correctDiv.style.display = "none";
       // checkDiv.appendChild(checkP);
       // questionsDiv.appendChild(checkDiv);
-    }, 500); 
+    }, 1000); 
   } else{
     // checkP.textContent="Wrong!";
     // checkDiv.appendChild(checkP);
@@ -133,21 +137,20 @@ function OptionClicked(){
     time -= 10;
 
     if (time <= 0) {
-      console.log("yes");
+     
       time= 0;
       showTimer.textContent = time;
 
     }
     wrongDiv.style.display = "block";
-    setTimeout(function(){wrongDiv.style.display = "none";}, 500); 
+    setTimeout(function(){wrongDiv.style.display = "none";}, 1000); 
   }
   
     
 
 
       questionNumber++;
-      console.log(questionNumber);
-      console.log(questionArray.length);
+    
       if ((questionNumber<questionArray.length)&&(time>0)){
         questionsDiv.innerHTML = "";
         AskQuestion();
@@ -159,24 +162,54 @@ function OptionClicked(){
 }
   function ShowScore(){
     wrongDiv.style.display = "none";
-    correctDiv.style.display = "none"
+    correctDiv.style.display = "none";
+    console.log(timerInterval);
     clearInterval(timerInterval);
     showTimer.textContent =0;
     questionsDiv.innerHTML = "";
-    console.log(showScore)
     resultDiv.style.display = 'block';
-    showScore.textContent=score;
-
-    
+    showScore.textContent=score;  
   }
+ function SubmitScore(){
+  let initials = initialsInput.value.trim().toUpperCase();
+  let scoreAdded=0;
+  let scoresList=[];
+  if (initials !== "") {
+    resultDiv.style.display="none";
+    scoresDiv.style.display='block';
+   let scoresString= window.localStorage.getItem("scores") || '';
+   if (scoresString!==""){
+    scoresList=scoresString.split(',');
+   }
+      for (let i = 0; i < scoresList.length; i=i+2) {
+        if (scoresList[i]===initials){
+          if (parseInt(scoresList[i+1])<=score){
+            scoresList[i+1]=score;
+            scoreAdded=1;
+          }
+        }
 
+      }
+      if (scoreAdded===0){
+        scoresList.push(initials);
+        scoresList.push(score);
+      }
+      window.localStorage.setItem("scores", scoresList.toString());
+      for (let i = 0; i < scoresList.length; i+=2) {
+        let newDiv = document.createElement("div");
+        newDiv.textContent= (i/2+1) +". " + scoresList[i]+" - "+scoresList[i+1];
+        scoreItem.appendChild(newDiv);
+      }
+  }else{
+    alert("Erorr! Input initials.");}
+ }
   
 
 
 
 
 
-submitScoreBtn.addEventListener("click", SubmitScore);
+ submitScoreBtn.addEventListener("click", SubmitScore);
 startQuizBtn.addEventListener("click", StartQuiz);
 
 
