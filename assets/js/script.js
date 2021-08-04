@@ -231,6 +231,7 @@ function ViewHighScores(){
   clearInterval(timerInterval);
   showTimer.textContent = 0;
   time=0;
+  
   scoresDiv.style.display='block';
   questionsDiv.style.display = 'none';
   questionsDiv.innerHTML='';
